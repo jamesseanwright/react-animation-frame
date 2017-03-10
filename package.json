@@ -9,7 +9,7 @@
     "build-tests": "babel --out-file test/AnimationFrameComponentTests.transpiled.js test/AnimationFrameComponentTests.jsx",
     "pretest": "eslint --ext js --ext jsx src test && npm run build && npm run build-tests",
     "test": "mocha",
-    "test-with-coverage": "babel-node ./node_modules/istanbul/lib/cli cover _mocha"
+    "test-with-coverage": " npm run pretest && babel-node ./node_modules/istanbul/lib/cli cover _mocha"
   },
   "author": "James Wright <james@jamesswright.co.uk>",
   "license": "ISC",
