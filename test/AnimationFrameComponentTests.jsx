@@ -67,6 +67,24 @@ describe('the RequestAnimationFrame HOC', function () {
         mockComponent.verify();
     });
 
+    it('should stop looping when the endAnimation method is invoked', function () {
+        mockComponent.expects('onAnimationFrame')
+            .once()
+            .withArgs(sinon.match.number);
+
+        const WrappedComponent = AnimationFrameComponent(InnerComponent);
+        const renderedComponent = enzyme.mount(<WrappedComponent />);
+        const innerComponent = renderedComponent.find(InnerComponent);
+
+        mockRaf.step({ count: 1 });
+
+        innerComponent.instance().endAnimation();
+
+        mockRaf.step({ count: 3 });
+
+        mockComponent.verify();
+    });
+
     it('should throttle the invocation of the callback if specified', function (done) {
         this.timeout(4000);
 

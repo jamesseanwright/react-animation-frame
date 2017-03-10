@@ -9,12 +9,19 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
             this.loop = this.loop.bind(this);
 
             this.state = {
+                isActive: true,
+                rafId: 0,
                 lastInvocationMs: 0
             };
         }
 
         loop(time) {
-            const { lastInvocationMs } = this.state;
+            const { lastInvocationMs, isActive } = this.state;
+
+            if (!isActive) {
+                return;
+            }
+
             const shouldInvoke = !throttleMs || time - lastInvocationMs >= throttleMs;
 
             if (shouldInvoke) {
@@ -22,7 +29,17 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
                 this.innerComponent.onAnimationFrame(time);
             }
 
-            requestAnimationFrame(this.loop);
+            this.setState({
+                rafId: requestAnimationFrame(this.loop)
+            });
+        }
+
+        endAnimation() {
+            cancelAnimationFrame(this.state.rafId);
+
+            this.setState({
+                isActive: false
+            });
         }
 
         componentDidMount() {
@@ -30,7 +47,9 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
                 throw new Error('The component passed to AnimationFrameComponent does not implement onAnimationFrame');
             }
 
-            requestAnimationFrame(this.loop);
+            this.setState({
+                rafId: requestAnimationFrame(this.loop)
+            });
         }
 
         render() {

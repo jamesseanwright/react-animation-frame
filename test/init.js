@@ -17,6 +17,7 @@ global.createDom = function createDom() {
     global.window = document.defaultView;
     global.mockRaf = mockRaf;
     global.requestAnimationFrame = mockRaf.raf;
+    global.cancelAnimationFrame = () => {};
 };
 
 global.destroyDom = function destroyDom() {
