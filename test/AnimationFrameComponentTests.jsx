@@ -28,6 +28,18 @@ describe('the RequestAnimationFrame HOC', function () {
 		destroyDom();
 	});
 
+	it('should pass all properties to the wrapped component', function () {
+		const WrappedComponent = AnimationFrameComponent(InnerComponent);
+
+		const renderedComponent = enzyme.mount(
+			<WrappedComponent foo="bar" baz={1} />
+		);
+
+		const innerComponent = renderedComponent.find(InnerComponent);
+
+		expect(renderedComponent.props()).to.deep.equal(innerComponent.props());
+	});
+
 	it('should call onAnimationFrame on each frame', function () {
 		mockComponent.expects('onAnimationFrame')
 			.thrice()
