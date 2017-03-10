@@ -35,7 +35,6 @@ module.exports = {
             "always"
         ],
 
-        "no-console": "off",
         "no-var": "error"
     }
 };

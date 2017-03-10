@@ -48,9 +48,36 @@ describe('the RequestAnimationFrame HOC', function () {
 		const WrappedComponent = AnimationFrameComponent(InnerComponent);
 
 		enzyme.mount(<WrappedComponent />);
-
 		mockRaf.step({ count: 3 });
 
 		mockComponent.verify();
+	});
+
+	it('should throttle the invocation of the callback if specified', function (done) {
+		this.timeout(4000);
+
+		const rafIntervalMs = 16; // fixing rAF interval for predictable testing
+		const throttleMs = 1000;
+		const invocationCount = 3;
+		const stepCount = Math.ceil(throttleMs / rafIntervalMs) * invocationCount;
+
+		mockComponent.expects('onAnimationFrame')
+			.exactly(invocationCount)
+			.withArgs(sinon.match.number);
+
+		const WrappedComponent = AnimationFrameComponent(InnerComponent, throttleMs);
+
+		enzyme.mount(<WrappedComponent />);
+
+		mockRaf.step({ count: stepCount, time: rafIntervalMs });
+
+		/* While this is generally a bad practice,
+		 * fake timers can't be used as the component
+		 * is tracking elapsed time between each rAF
+		 * loop invocation. */
+		setTimeout(() => {
+			mockComponent.verify();
+			done();
+		}, throttleMs * invocationCount + 5);
 	});
 });

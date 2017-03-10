@@ -2,15 +2,26 @@
 
 const React = require('react');
 
-module.exports = function AnimationFrameComponent(InnerComponent) {
+module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
 	return class AnimatedComponent extends React.Component {
 		constructor() {
 			super();
 			this.loop = this.loop.bind(this);
+
+			this.state = {
+				lastInvocationMs: 0
+			};
 		}
 
 		loop(time) {
-			this.innerComponent.onAnimationFrame(time);
+			const { lastInvocationMs } = this.state;
+			const shouldInvoke = !throttleMs || time - lastInvocationMs >= throttleMs;
+
+			if (shouldInvoke) {
+				this.setState({ lastInvocationMs: time });
+				this.innerComponent.onAnimationFrame(time);
+			}
+
 			requestAnimationFrame(this.loop);
 		}
 
