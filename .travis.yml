@@ -1,0 +1,14 @@
+language: node_js
+node_js: 6
+
+install: "npm i"
+script: "npm test-with-coverage"
+
+deploy:
+  provider: npm
+  email: "james@jamesswright.co.uk"
+  api_key:
+    secure: "Job2eejNih8cF04gNaEo9Uy5aEWJ0K3DBBrOhHolThFIXsXS3g3ZVQ5wXUttwNbHZac2rbHGcMkPsZPdDpXfrAph3lqvNla5LXh/muaGvX2shfx1dtbelrtC08NQNg5wStc3llxfG/RKQFz/qiOPlKF6j6PhQWsBk2USdFl/jNynSoNYmGFe2vq1PeLxKdVhYf1X/WiCQFXBBEU8skYD2dXoSJ9WXq0o/UGk8pzgR68ndPpUgdos8N0MUDIULv0PM8Jr2TH4V2eZbrR8UboxyF8VvwS21aoCGZGB6V+ik96ObuTvKBgbJPc2EhkmAiSPmTTBzjvp14BuAvlinIDn2NbIvqvu8lk46XmwEz7xzlCzCtRhFaVX5UqM+41YlOz+/pvXo4YUQP9RLsgIUR4ynwDRrnuZZ2M35LyEIwxgj/K2j+UFd7i3S11c8bCV8h5kRv7ZED4cwTVG5l1wH8TSqRMQIBzQzxNMWYGWalyfmaWPAn6NYhDipPn7lk8m594tedyzYaO/cnkisrYhiaiMpcMFXkDCfbLYmCwLMDg9rVbZwQjYvgt9wcmxq97JD450ga6JvOR3Bds7T15gMFru6bsrzAjbR+HBwU4o5tMqgzjf6G086r5rIDk0GJcfaGUvwmPDuzv79GPdfzFb90YU0H2GXALe1VswcoNtuum86ow="
+
+  on:
+    tags: true

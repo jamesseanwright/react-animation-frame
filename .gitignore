@@ -1,3 +1,4 @@
 dist
 *.transpiled.js
 node_modules
+coverage

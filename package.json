@@ -7,7 +7,9 @@
   "scripts": {
     "build": "babel --out-dir dist src",
     "build-tests": "babel --out-file test/AnimationFrameComponentTests.transpiled.js test/AnimationFrameComponentTests.jsx",
-    "test": "eslint --ext js --ext jsx src test && npm run build && npm run build-tests && mocha"
+    "pretest": "eslint --ext js --ext jsx src test && npm run build && npm run build-tests",
+    "test": "mocha",
+    "test-with-coverage": "babel-node ./node_modules/istanbul/lib/cli cover _mocha"
   },
   "author": "James Wright <james@jamesswright.co.uk>",
   "license": "ISC",
@@ -25,6 +27,7 @@
     "enzyme": "2.7.1",
     "eslint": "3.17.1",
     "eslint-plugin-react": "6.10.0",
+    "istanbul": "0.4.5",
     "jsdom": "9.11.0",
     "mocha": "3.2.0",
     "mock-raf": "1.0.0",
