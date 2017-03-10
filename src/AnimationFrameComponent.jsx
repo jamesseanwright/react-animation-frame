@@ -19,8 +19,10 @@ module.exports = function AnimationFrameComponent(InnerComponent) {
 		}
 
 		render() {
-			return <InnerComponent ref={node => this.innerComponent = node}
-				{...this.props} />;
+			return (
+				<InnerComponent ref={node => this.innerComponent = node}
+								{...this.props} />
+			);
 		}
 	};
 };
