@@ -2,7 +2,7 @@ language: node_js
 node_js: 6
 
 install: "npm i"
-script: "npm test-with-coverage"
+script: "npm run test-with-coverage"
 
 deploy:
   provider: npm
