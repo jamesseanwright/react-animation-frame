@@ -3,41 +3,43 @@
 const React = require('react');
 
 module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
-	return class AnimatedComponent extends React.Component {
-		constructor() {
-			super();
-			this.loop = this.loop.bind(this);
+    return class AnimatedComponent extends React.Component {
+        constructor() {
+            super();
+            this.loop = this.loop.bind(this);
 
-			this.state = {
-				lastInvocationMs: 0
-			};
-		}
+            this.state = {
+                lastInvocationMs: 0
+            };
 
-		loop(time) {
-			const { lastInvocationMs } = this.state;
-			const shouldInvoke = !throttleMs || time - lastInvocationMs >= throttleMs;
+            var o;
+        }
 
-			if (shouldInvoke) {
-				this.setState({ lastInvocationMs: time });
-				this.innerComponent.onAnimationFrame(time);
-			}
+        loop(time) {
+            const { lastInvocationMs } = this.state;
+            const shouldInvoke = !throttleMs || time - lastInvocationMs >= throttleMs;
 
-			requestAnimationFrame(this.loop);
-		}
+            if (shouldInvoke) {
+                this.setState({ lastInvocationMs: time });
+                this.innerComponent.onAnimationFrame(time);
+            }
 
-		componentDidMount() {
-			if (!this.innerComponent.onAnimationFrame) {
-				throw new Error('The component passed to AnimationFrameComponent does not implement onAnimationFrame');
-			}
+            requestAnimationFrame(this.loop);
+        }
 
-			requestAnimationFrame(this.loop);
-		}
+        componentDidMount() {
+            if (!this.innerComponent.onAnimationFrame) {
+                throw new Error('The component passed to AnimationFrameComponent does not implement onAnimationFrame');
+            }
 
-		render() {
-			return (
-				<InnerComponent ref={node => this.innerComponent = node}
-								{...this.props} />
-			);
-		}
-	};
+            requestAnimationFrame(this.loop);
+        }
+
+        render() {
+            return (
+                <InnerComponent ref={node => this.innerComponent = node}
+                    {...this.props} />
+            );
+        }
+    };
 };

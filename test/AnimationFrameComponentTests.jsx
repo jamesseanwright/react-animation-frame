@@ -8,90 +8,90 @@ const sinon = require('sinon');
 const AnimationFrameComponent = require('../dist/AnimationFrameComponent');
 
 class InnerComponent extends React.Component {
-	onAnimationFrame() {}
+    onAnimationFrame() {}
 
-	render() {
-		return <p>Foo</p>;
-	}
+    render() {
+        return <p>Foo</p>;
+    }
 }
 
 class NonAnimatable extends React.Component {
-	render() {
-		return <p>Can't be animated!</p>;
-	}
+    render() {
+        return <p>Can't be animated!</p>;
+    }
 }
 
 describe('the RequestAnimationFrame HOC', function () {
-	let mockComponent;
+    let mockComponent;
 
-	beforeEach(function () {
-		mockComponent = sinon.mock(InnerComponent.prototype);
-		createDom();
-	});
+    beforeEach(function () {
+        mockComponent = sinon.mock(InnerComponent.prototype);
+        createDom();
+    });
 
-	afterEach(function () {
-		mockComponent.restore();
-		destroyDom();
-	});
+    afterEach(function () {
+        mockComponent.restore();
+        destroyDom();
+    });
 
-	it('should throw an error if the inner component doesn`t implement onAnimationFrame', function () {
-		const WrappedComponent = AnimationFrameComponent(NonAnimatable);
+    it('should throw an error if the inner component doesn`t implement onAnimationFrame', function () {
+        const WrappedComponent = AnimationFrameComponent(NonAnimatable);
 
-		expect(() => enzyme.mount(<WrappedComponent />)).to.throw(
-			'The component passed to AnimationFrameComponent does not implement onAnimationFrame'
-		);
-	});
+        expect(() => enzyme.mount(<WrappedComponent />)).to.throw(
+            'The component passed to AnimationFrameComponent does not implement onAnimationFrame'
+        );
+    });
 
-	it('should pass all properties to the wrapped component', function () {
-		const WrappedComponent = AnimationFrameComponent(InnerComponent);
+    it('should pass all properties to the wrapped component', function () {
+        const WrappedComponent = AnimationFrameComponent(InnerComponent);
 
-		const renderedComponent = enzyme.mount(
-			<WrappedComponent foo="bar" baz={1} />
-		);
+        const renderedComponent = enzyme.mount(
+            <WrappedComponent foo="bar" baz={1} />
+        );
 
-		const innerComponent = renderedComponent.find(InnerComponent);
+        const innerComponent = renderedComponent.find(InnerComponent);
 
-		expect(renderedComponent.props()).to.deep.equal(innerComponent.props());
-	});
+        expect(renderedComponent.props()).to.deep.equal(innerComponent.props());
+    });
 
-	it('should call onAnimationFrame on each frame', function () {
-		mockComponent.expects('onAnimationFrame')
-			.thrice()
-			.withArgs(sinon.match.number);
+    it('should call onAnimationFrame on each frame', function () {
+        mockComponent.expects('onAnimationFrame')
+            .thrice()
+            .withArgs(sinon.match.number);
 
-		const WrappedComponent = AnimationFrameComponent(InnerComponent);
+        const WrappedComponent = AnimationFrameComponent(InnerComponent);
 
-		enzyme.mount(<WrappedComponent />);
-		mockRaf.step({ count: 3 });
+        enzyme.mount(<WrappedComponent />);
+        mockRaf.step({ count: 3 });
 
-		mockComponent.verify();
-	});
+        mockComponent.verify();
+    });
 
-	it('should throttle the invocation of the callback if specified', function (done) {
-		this.timeout(4000);
+    it('should throttle the invocation of the callback if specified', function (done) {
+        this.timeout(4000);
 
-		const rafIntervalMs = 16; // fixing rAF interval for predictable testing
-		const throttleMs = 1000;
-		const invocationCount = 3;
-		const stepCount = Math.ceil(throttleMs / rafIntervalMs) * invocationCount;
+        const rafIntervalMs = 16; // fixing rAF interval for predictable testing
+        const throttleMs = 1000;
+        const invocationCount = 3;
+        const stepCount = Math.ceil(throttleMs / rafIntervalMs) * invocationCount;
 
-		mockComponent.expects('onAnimationFrame')
-			.exactly(invocationCount)
-			.withArgs(sinon.match.number);
+        mockComponent.expects('onAnimationFrame')
+            .exactly(invocationCount)
+            .withArgs(sinon.match.number);
 
-		const WrappedComponent = AnimationFrameComponent(InnerComponent, throttleMs);
+        const WrappedComponent = AnimationFrameComponent(InnerComponent, throttleMs);
 
-		enzyme.mount(<WrappedComponent />);
+        enzyme.mount(<WrappedComponent />);
 
-		mockRaf.step({ count: stepCount, time: rafIntervalMs });
+        mockRaf.step({ count: stepCount, time: rafIntervalMs });
 
-		/* While this is generally a bad practice,
-		 * fake timers can't be used as the component
-		 * is tracking elapsed time between each rAF
-		 * loop invocation. */
-		setTimeout(() => {
-			mockComponent.verify();
-			done();
-		}, throttleMs * invocationCount + 5);
-	});
+        /* While this is generally a bad practice,
+         * fake timers can't be used as the component
+         * is tracking elapsed time between each rAF
+         * loop invocation. */
+        setTimeout(() => {
+            mockComponent.verify();
+            done();
+        }, throttleMs * invocationCount + 5);
+    });
 });

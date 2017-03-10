@@ -9,15 +9,22 @@ module.exports = {
 
     "env": {
         "es6": true,
-        "node": true
+        "commonjs": true,
+        "browser": true
     },
 
     "extends": "eslint:recommended",
 
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+
     "rules": {
         "indent": [
             "error",
-            "4"
+            4
         ],
 
         "linebreak-style": [

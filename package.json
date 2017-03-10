@@ -6,7 +6,7 @@
   "scripts": {
     "build": "babel --out-dir dist src",
     "build-tests": "babel --out-file test/AnimationFrameComponentTests.transpiled.js test/AnimationFrameComponentTests.jsx",
-    "test": "eslint {src,test} && npm run build && npm run build-tests && mocha"
+    "test": "eslint --ext js --ext jsx src test && npm run build && npm run build-tests && mocha"
   },
   "author": "James Wright <james@jamesswright.co.uk>",
   "license": "ISC",
