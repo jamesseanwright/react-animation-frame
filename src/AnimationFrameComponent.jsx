@@ -11,8 +11,6 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
             this.state = {
                 lastInvocationMs: 0
             };
-
-            var o;
         }
 
         loop(time) {

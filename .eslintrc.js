@@ -4,7 +4,10 @@ module.exports = {
         "describe": true,
         "it": true,
         "beforeEach": true,
-        "afterEach": true
+        "afterEach": true,
+        "createDom": true,
+        "destroyDom": true,
+        "mockRaf": true
     },
 
     "env": {
@@ -21,7 +24,10 @@ module.exports = {
         }
     },
 
+    "plugins": ["react"],
+
     "rules": {
+
         "indent": [
             "error",
             4
@@ -42,6 +48,7 @@ module.exports = {
             "always"
         ],
 
-        "no-var": "error"
+        "no-var": "error",
+        "react/jsx-uses-vars": 2
     }
 };
