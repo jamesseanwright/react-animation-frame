@@ -1,7 +1,6 @@
 'use strict';
 
 const enzyme = require('enzyme');
-const mockRaf = require('mock-raf');
 const React = require('react');
 const { expect } = require('chai');
 const sinon = require('sinon');
@@ -20,7 +19,7 @@ describe('the RequestAnimationFrame HOC', function () {
 	let mockComponent;
 
 	beforeEach(function () {
-		mockComponent = sinon.mock(InnerComponent);
+		mockComponent = sinon.mock(InnerComponent.prototype);
 		createDom();
 	});
 
