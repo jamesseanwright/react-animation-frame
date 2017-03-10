@@ -36,15 +36,10 @@ describe('the RequestAnimationFrame HOC', function () {
 
 	it('should throw an error if the inner component doesn`t implement onAnimationFrame', function () {
 		const WrappedComponent = AnimationFrameComponent(NonAnimatable);
-		const mountSpy = sinon.spy(WrappedComponent.prototype, 'componentDidMount');
 
-		enzyme.mount(<WrappedComponent />);
-
-		expect(
-			mountSpy.threw(
-				new Error('The component passed to AnimationFrameComponent does not implement onAnimationFrame')
-			)
-		).to.be.true;
+		expect(() => enzyme.mount(<WrappedComponent />)).to.throw(
+			'The component passed to AnimationFrameComponent does not implement onAnimationFrame'
+		);
 	});
 
 	it('should pass all properties to the wrapped component', function () {

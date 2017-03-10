@@ -26,6 +26,10 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
 		}
 
 		componentDidMount() {
+			if (!this.innerComponent.onAnimationFrame) {
+				throw new Error('The component passed to AnimationFrameComponent does not implement onAnimationFrame');
+			}
+
 			requestAnimationFrame(this.loop);
 		}
 
