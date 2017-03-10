@@ -15,6 +15,12 @@ class InnerComponent extends React.Component {
 	}
 }
 
+class NonAnimatable extends React.Component {
+	render() {
+		return <p>Can't be animated!</p>;
+	}
+}
+
 describe('the RequestAnimationFrame HOC', function () {
 	let mockComponent;
 
@@ -26,6 +32,19 @@ describe('the RequestAnimationFrame HOC', function () {
 	afterEach(function () {
 		mockComponent.restore();
 		destroyDom();
+	});
+
+	it('should throw an error if the inner component doesn`t implement onAnimationFrame', function () {
+		const WrappedComponent = AnimationFrameComponent(NonAnimatable);
+		const mountSpy = sinon.spy(WrappedComponent.prototype, 'componentDidMount');
+
+		enzyme.mount(<WrappedComponent />);
+
+		expect(
+			mountSpy.threw(
+				new Error('The component passed to AnimationFrameComponent does not implement onAnimationFrame')
+			)
+		).to.be.true;
 	});
 
 	it('should pass all properties to the wrapped component', function () {
