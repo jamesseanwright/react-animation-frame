@@ -51,7 +51,8 @@ describe('the RequestAnimationFrame HOC', function () {
 
         const innerComponent = renderedComponent.find(InnerComponent);
 
-        expect(renderedComponent.props()).to.deep.equal(innerComponent.props());
+        expect(renderedComponent.prop('foo')).to.deep.equal(innerComponent.prop('foo'));
+        expect(renderedComponent.prop('baz')).to.deep.equal(innerComponent.prop('baz'));
     });
 
     it('should call onAnimationFrame on each frame', function () {
@@ -78,7 +79,7 @@ describe('the RequestAnimationFrame HOC', function () {
 
         mockRaf.step({ count: 1 });
 
-        innerComponent.instance().endAnimation();
+        innerComponent.prop('endAnimation')();
 
         mockRaf.step({ count: 3 });
 

@@ -6,7 +6,9 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
     return class AnimatedComponent extends React.Component {
         constructor() {
             super();
+
             this.loop = this.loop.bind(this);
+            this.endAnimation = this.endAnimation.bind(this);
 
             this.state = {
                 isActive: true,
@@ -55,7 +57,8 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
         render() {
             return (
                 <InnerComponent ref={node => this.innerComponent = node}
-                    {...this.props} />
+                                endAnimation={this.endAnimation}
+                                {...this.props} />
             );
         }
     };
