@@ -1,5 +1,9 @@
 # React Animation Frame
 
+[![Build Status](https://travis-ci.org/jamesseanwright/react-animation-frame.svg?branch=master)](https://travis-ci.org/jamesseanwright/react-animation-frame) [![Coverage Status](https://coveralls.io/repos/github/jamesseanwright/react-animation-frame/badge.svg?branch=master)](https://coveralls.io/github/jamesseanwright/react-animation-frame?branch=master)
+[![npm version](https://badge.fury.io/js/react-animation-frame.svg)](https://www.npmjs.com/package/react-animation-frame)
+
+
 A React higher-order component for invoking component repeating logic using [`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame).
 
 The module follows the CommonJS format, so it is compatible with Browserify and Webpack. It also supports ES5 and beyond.
