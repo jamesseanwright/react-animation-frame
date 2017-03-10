@@ -2,7 +2,7 @@
   "name": "react-request-animation-frame",
   "version": "0.0.1",
   "description": "A React higher-order component for managing recurring animation frames",
-  "main": "index.js",
+  "main": "dist/AnimationFrameComponent.js",
   "scripts": {
     "build": "babel --out-dir dist src",
     "build-tests": "babel --out-file test/AnimationFrameComponentTests.transpiled.js test/AnimationFrameComponentTests.jsx",
