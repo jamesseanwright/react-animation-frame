@@ -1,5 +1,5 @@
 {
-  "name": "react-request-animation-frame",
+  "name": "react-animation-frame",
   "version": "0.0.1",
   "description": "A React higher-order component for managing recurring animation frames",
   "main": "dist/AnimationFrameComponent.js",
