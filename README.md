@@ -77,5 +77,5 @@ Cancels the current animation frame and ends the loop.
 
 Run `npm i` to install the dependencies.
 
-* `npm build` - transpile the library
+* `npm run build` - transpile the library
 * `npm test` - runs the tests
