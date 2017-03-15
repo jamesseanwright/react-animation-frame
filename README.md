@@ -63,9 +63,11 @@ Wraps `Component` and starts a `requestAnimationFrame` loop. `throttleMs` if spe
 
 ### Inside a wrapped component
 
-#### `onAnimationFrame(timestamp)`
+#### `onAnimationFrame(timestamp, lastTimestamp)`
 
 Called on each iteration of the underlying `requestAnimationFrame` loop, or if the elapsed throttle time has been surpassed. `timestamp` is the same `DOMHighResTimeStamp` with which `requestAnimationFrame`'s callback is invoked.
+
+The previous timestamp is also passed, which can be useful for calculating deltas. For n calls, `lastTimestamp` will be the value of `timestamp` for call n - 1.
 
 
 #### `this.props.endAnimation()`

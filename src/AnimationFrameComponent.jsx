@@ -28,7 +28,7 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
 
             if (shouldInvoke) {
                 this.setState({ lastInvocationMs: time });
-                this.innerComponent.onAnimationFrame(time);
+                this.innerComponent.onAnimationFrame(time, lastInvocationMs);
             }
 
             this.setState({

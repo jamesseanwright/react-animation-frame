@@ -68,6 +68,23 @@ describe('the RequestAnimationFrame HOC', function () {
         mockComponent.verify();
     });
 
+    it('should pass the current and previous times to onAnimationFrame', function () {
+        mockComponent.expects('onAnimationFrame')
+            .withArgs(16.666666666666668, 0)
+            .onFirstCall();
+
+        mockComponent.expects('onAnimationFrame')
+            .withArgs(33.333333333333336, 16.666666666666668)
+            .onSecondCall();
+
+        const WrappedComponent = AnimationFrameComponent(InnerComponent);
+
+        enzyme.mount(<WrappedComponent />);
+        mockRaf.step({ count: 2 });
+
+        mockComponent.verify();
+    });
+
     it('should stop looping when the endAnimation method is invoked', function () {
         mockComponent.expects('onAnimationFrame')
             .once()
