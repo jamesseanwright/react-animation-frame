@@ -74,6 +74,10 @@ The previous timestamp is also passed, which can be useful for calculating delta
 
 Cancels the current animation frame and ends the loop.
 
+#### `this.props.startAnimation()`
+
+Function to restart the animation after it was ended by `endAnimation`.
+
 
 ### Local development
 
