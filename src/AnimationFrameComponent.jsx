@@ -47,7 +47,6 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
 
         startAnimation() {
             if (!this.state.isActive) {
-
                 this.setState({
                     isActive: true,
                     rafId: requestAnimationFrame(this.loop)
