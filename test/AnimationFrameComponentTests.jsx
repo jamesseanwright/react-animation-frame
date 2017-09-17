@@ -103,6 +103,28 @@ describe('the RequestAnimationFrame HOC', function () {
         mockComponent.verify();
     });
 
+    it('should restart looping when the startAnimation method is invoked', function () {
+        mockComponent.expects('onAnimationFrame')
+            .twice()
+            .withArgs(sinon.match.number);
+
+        const WrappedComponent = AnimationFrameComponent(InnerComponent);
+        const renderedComponent = enzyme.mount(<WrappedComponent />);
+        const innerComponent = renderedComponent.find(InnerComponent);
+
+        mockRaf.step({ count: 1 });
+
+        innerComponent.prop('endAnimation')();
+
+        mockRaf.step({ count: 3 });
+
+        innerComponent.prop('startAnimation')();
+
+        mockRaf.step({ count: 1 });
+
+        mockComponent.verify();
+    });
+
     it('should throttle the invocation of the callback if specified', function (done) {
         this.timeout(4000);
 

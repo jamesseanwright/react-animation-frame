@@ -9,6 +9,7 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
 
             this.loop = this.loop.bind(this);
             this.endAnimation = this.endAnimation.bind(this);
+            this.startAnimation = this.startAnimation.bind(this);
 
             this.state = {
                 isActive: true,
@@ -44,6 +45,16 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
             });
         }
 
+        startAnimation() {
+            if (!this.state.isActive) {
+
+                this.setState({
+                    isActive: true,
+                    rafId: requestAnimationFrame(this.loop)
+                });
+            }
+        }
+
         componentDidMount() {
             if (!this.innerComponent.onAnimationFrame) {
                 throw new Error('The component passed to AnimationFrameComponent does not implement onAnimationFrame');
@@ -58,6 +69,7 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
             return (
                 <InnerComponent ref={node => this.innerComponent = node}
                                 endAnimation={this.endAnimation}
+                                startAnimation={this.startAnimation}
                                 {...this.props} />
             );
         }
