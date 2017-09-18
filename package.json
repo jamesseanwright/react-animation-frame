@@ -1,6 +1,6 @@
 {
   "name": "react-animation-frame",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A React higher-order component for managing recurring animation frames",
   "repository": "https://github.com/jamesseanwright/react-animation-frame",
   "main": "dist/AnimationFrameComponent.js",
@@ -9,7 +9,8 @@
     "build-tests": "babel --out-file test/AnimationFrameComponentTests.transpiled.js test/AnimationFrameComponentTests.jsx",
     "pretest": "eslint --ext js --ext jsx src test && npm run build && npm run build-tests",
     "test": "mocha",
-    "test-with-coverage": " npm run pretest && babel-node ./node_modules/istanbul/lib/cli cover _mocha && cat coverage/lcov.info | coveralls"
+    "test-with-coverage": "npm run pretest && babel-node ./node_modules/istanbul/lib/cli cover _mocha && cat coverage/lcov.info | coveralls",
+    "prepublish": "npm run build"
   },
   "author": "James Wright <james@jamesswright.co.uk>",
   "license": "ISC",
