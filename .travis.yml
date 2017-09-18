@@ -4,11 +4,8 @@ node_js: 6
 install: "npm i"
 script: "npm run test-with-coverage"
 
-cache:
-  directories:
-    - node_modules
-
 deploy:
+  skip_cleanup: true
   provider: npm
   email: "james@jamesswright.co.uk"
   api_key:
