@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/react-animation-frame.svg)](https://www.npmjs.com/package/react-animation-frame)
 
 
-A React higher-order component for invoking component repeating logic using [`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame).
+A React higher-order component for invoking component repeating logic using [`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame). It works in both the [browser](https://github.com/jamesseanwright/react-animation-frame-example) and [React Native](https://github.com/jamesseanwright/react-animation-frame-native-example).
 
 The module follows the CommonJS format, so it is compatible with Browserify and Webpack. It also supports ES5 and beyond.
 

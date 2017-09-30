@@ -20,14 +20,14 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
 
         loop(time) {
             const { lastInvocationMs, isActive } = this.state;
+            const isAnimatable = !!(this.innerComponent && this.innerComponent.onAnimationFrame);
 
-            if (!isActive) {
-                return;
-            }
+            // Latter const is defensive check for React Native unmount (issues/#2)
+            if (!isActive || !isAnimatable) return;
 
-            const shouldInvoke = !throttleMs || time - lastInvocationMs >= throttleMs;
+            const hasTimeElapsed = !throttleMs || time - lastInvocationMs >= throttleMs;
 
-            if (shouldInvoke) {
+            if (hasTimeElapsed) {
                 this.setState({ lastInvocationMs: time });
                 this.innerComponent.onAnimationFrame(time, lastInvocationMs);
             }
@@ -62,6 +62,10 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
             this.setState({
                 rafId: requestAnimationFrame(this.loop)
             });
+        }
+
+        componentWillUnmount() {
+            this.endAnimation();
         }
 
         render() {

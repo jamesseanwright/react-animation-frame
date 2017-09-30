@@ -152,4 +152,32 @@ describe('the RequestAnimationFrame HOC', function () {
             done();
         }, throttleMs * invocationCount + 5);
     });
+
+    describe('React Native unmount bug resolution', function () {
+        it('should not call onAnimationFrame when the child unmounts', function () {
+            mockComponent.expects('onAnimationFrame')
+                .never();
+
+            const WrappedComponent = AnimationFrameComponent(InnerComponent);
+            const renderedComponent = enzyme.mount(<WrappedComponent />);
+
+            renderedComponent.instance().innerComponent = null;
+            mockRaf.step({ count: 2 });
+
+            mockComponent.verify();
+        });
+
+        it('should not call onAnimationFrame it becomes unavailable', function () {
+            mockComponent.expects('onAnimationFrame')
+                .never();
+
+            const WrappedComponent = AnimationFrameComponent(InnerComponent);
+            const renderedComponent = enzyme.mount(<WrappedComponent />);
+
+            renderedComponent.instance().innerComponent.onAnimationFrame = null;
+            mockRaf.step({ count: 2 });
+
+            mockComponent.verify();
+        });
+    });
 });
