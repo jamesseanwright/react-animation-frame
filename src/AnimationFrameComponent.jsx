@@ -22,7 +22,7 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
             const { lastInvocationMs, isActive } = this.state;
             const isAnimatable = !!(this.innerComponent && this.innerComponent.onAnimationFrame);
 
-            // Latter const is defensive check for React Native unmount (issues/#2)
+            // Latter const is defensive check for React Native unmount (issues/#3)
             if (!isActive || !isAnimatable) return;
 
             const hasTimeElapsed = !throttleMs || time - lastInvocationMs >= throttleMs;
