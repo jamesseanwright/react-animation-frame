@@ -10,58 +10,60 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
             this.loop = this.loop.bind(this);
             this.endAnimation = this.endAnimation.bind(this);
             this.startAnimation = this.startAnimation.bind(this);
-
+            this.rafId = 0;
+            this.lastInvocationMs = 0;
             this.state = {
-                isActive: true,
-                rafId: 0,
-                lastInvocationMs: 0
+                isActive: true
             };
         }
 
         loop(time) {
-            const { lastInvocationMs, isActive } = this.state;
-            const isAnimatable = !!(this.innerComponent && this.innerComponent.onAnimationFrame);
+            const { isActive } = this.state;
+            const { lastInvocationMs } = this;
+            const isAnimatable = !!(
+                this.innerComponent && this.innerComponent.onAnimationFrame
+            );
 
             // Latter const is defensive check for React Native unmount (issues/#3)
             if (!isActive || !isAnimatable) return;
 
-            const hasTimeElapsed = !throttleMs || time - lastInvocationMs >= throttleMs;
+            const hasTimeElapsed =
+                !throttleMs || time - lastInvocationMs >= throttleMs;
 
             if (hasTimeElapsed) {
-                this.setState({ lastInvocationMs: time });
+                this.lastInvocationMs = time;
                 this.innerComponent.onAnimationFrame(time, lastInvocationMs);
             }
 
-            this.setState({
-                rafId: requestAnimationFrame(this.loop)
-            });
+            this.rafId = requestAnimationFrame(this.loop);
         }
 
         endAnimation() {
-            cancelAnimationFrame(this.state.rafId);
+            if (this.state.isActive) {
+                cancelAnimationFrame(this.rafId);
 
-            this.setState({
-                isActive: false
-            });
+                this.setState({
+                    isActive: false
+                });
+            }
         }
 
         startAnimation() {
             if (!this.state.isActive) {
                 this.setState({
-                    isActive: true,
-                    rafId: requestAnimationFrame(this.loop)
+                    isActive: true
                 });
+                this.rafId = requestAnimationFrame(this.loop);
             }
         }
 
         componentDidMount() {
             if (!this.innerComponent.onAnimationFrame) {
-                throw new Error('The component passed to AnimationFrameComponent does not implement onAnimationFrame');
+                throw new Error(
+                    'The component passed to AnimationFrameComponent does not implement onAnimationFrame'
+                );
             }
-
-            this.setState({
-                rafId: requestAnimationFrame(this.loop)
-            });
+            this.rafId = requestAnimationFrame(this.loop);
         }
 
         componentWillUnmount() {
@@ -70,10 +72,12 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
 
         render() {
             return (
-                <InnerComponent ref={node => this.innerComponent = node}
-                                endAnimation={this.endAnimation}
-                                startAnimation={this.startAnimation}
-                                {...this.props} />
+                <InnerComponent
+                    ref={node => (this.innerComponent = node)}
+                    endAnimation={this.endAnimation}
+                    startAnimation={this.startAnimation}
+                    {...this.props}
+                />
             );
         }
     };
