@@ -1,42 +1,46 @@
 {
-  "name": "react-animation-frame",
-  "version": "0.3.5",
-  "description": "A React higher-order component for managing recurring animation frames",
-  "repository": "https://github.com/jamesseanwright/react-animation-frame",
-  "main": "dist/AnimationFrameComponent.js",
-  "scripts": {
-    "build": "babel --out-dir dist src",
-    "build-tests": "babel --out-file test/AnimationFrameComponentTests.transpiled.js test/AnimationFrameComponentTests.jsx",
-    "pretest": "eslint --ext js --ext jsx src test && npm run build && npm run build-tests",
-    "test": "mocha",
-    "test-with-coverage": "npm run pretest && babel-node ./node_modules/istanbul/lib/cli cover _mocha && cat coverage/lcov.info | coveralls"
-  },
-  "author": "James Wright <james@jamesswright.co.uk>",
-  "license": "ISC",
-  "keywords": [
-    "react",
-    "requestAnimationFrame",
-    "higher-order component",
-    "hoc"
-  ],
-  "devDependencies": {
-    "babel-cli": "6.23.0",
-    "babel-preset-es2015": "6.24.1",
-    "babel-preset-react": "6.23.0",
-    "chai": "3.5.0",
-    "coveralls": "2.12.0",
-    "enzyme": "2.7.1",
-    "eslint": "3.17.1",
-    "eslint-plugin-react": "6.10.0",
-    "istanbul": "0.4.5",
-    "jsdom": "9.11.0",
-    "mocha": "3.2.0",
-    "mock-raf": "1.0.0",
-    "react-addons-test-utils": "15.4.2",
-    "react-dom": "15.4.2",
-    "sinon": "1.17.7"
-  },
-  "dependencies": {
-    "react": "15.4.2"
-  }
+    "name": "react-animation-frame",
+    "version": "0.3.7",
+    "description":
+        "A React higher-order component for managing recurring animation frames",
+    "repository": "https://github.com/jamesseanwright/react-animation-frame",
+    "main": "dist/AnimationFrameComponent.js",
+    "scripts": {
+        "build": "babel --out-dir dist src",
+        "build-tests":
+            "babel --out-file test/AnimationFrameComponentTests.transpiled.js test/AnimationFrameComponentTests.jsx",
+        "pretest":
+            "eslint --ext js --ext jsx src test && npm run build && npm run build-tests",
+        "test": "mocha",
+        "test-with-coverage":
+            "npm run pretest && babel-node ./node_modules/istanbul/lib/cli cover _mocha && cat coverage/lcov.info | coveralls"
+    },
+    "author": "James Wright <james@jamesswright.co.uk>",
+    "license": "ISC",
+    "keywords": [
+        "react",
+        "requestAnimationFrame",
+        "higher-order component",
+        "hoc"
+    ],
+    "devDependencies": {
+        "babel-cli": "6.23.0",
+        "babel-preset-es2015": "6.24.1",
+        "babel-preset-react": "6.23.0",
+        "chai": "3.5.0",
+        "coveralls": "2.12.0",
+        "enzyme": "2.7.1",
+        "eslint": "3.17.1",
+        "eslint-plugin-react": "6.10.0",
+        "istanbul": "0.4.5",
+        "jsdom": "9.11.0",
+        "mocha": "3.2.0",
+        "mock-raf": "1.0.0",
+        "react-addons-test-utils": "15.4.2",
+        "react-dom": "15.4.2",
+        "sinon": "1.17.7"
+    },
+    "dependencies": {
+        "react": "15.4.2"
+    }
 }
