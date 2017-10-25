@@ -5,7 +5,7 @@ const React = require('react');
 const { expect } = require('chai');
 const sinon = require('sinon');
 
-const AnimationFrameComponent = require('../dist/AnimationFrameComponent');
+const AnimationFrameComponent = require('../src/AnimationFrameComponent');
 
 class InnerComponent extends React.Component {
     onAnimationFrame() {}
