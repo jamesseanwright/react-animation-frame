@@ -11,15 +11,13 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
             this.endAnimation = this.endAnimation.bind(this);
             this.startAnimation = this.startAnimation.bind(this);
 
-            this.state = {
-                isActive: true,
-                rafId: 0,
-                lastInvocationMs: 0
-            };
+            this.isActive = true;
+            this.rafId = 0;
+            this.lastInvocationMs = 0;
         }
 
         loop(time) {
-            const { lastInvocationMs, isActive } = this.state;
+            const { lastInvocationMs, isActive } = this;
             const isAnimatable = !!(this.innerComponent && this.innerComponent.onAnimationFrame);
 
             // Latter const is defensive check for React Native unmount (issues/#3)
@@ -28,29 +26,23 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
             const hasTimeElapsed = !throttleMs || time - lastInvocationMs >= throttleMs;
 
             if (hasTimeElapsed) {
-                this.setState({ lastInvocationMs: time });
+                this.lastInvocationMs = time;
                 this.innerComponent.onAnimationFrame(time, lastInvocationMs);
             }
 
-            this.setState({
-                rafId: requestAnimationFrame(this.loop)
-            });
+            this.rafId = requestAnimationFrame(this.loop);
         }
 
         endAnimation() {
-            cancelAnimationFrame(this.state.rafId);
+            cancelAnimationFrame(this.rafId);
 
-            this.setState({
-                isActive: false
-            });
+            this.isActive = false;
         }
 
         startAnimation() {
-            if (!this.state.isActive) {
-                this.setState({
-                    isActive: true,
-                    rafId: requestAnimationFrame(this.loop)
-                });
+            if (!this.isActive) {
+                this.isActive = true;
+                this.rafId = requestAnimationFrame(this.loop);
             }
         }
 
@@ -59,9 +51,7 @@ module.exports = function AnimationFrameComponent(InnerComponent, throttleMs) {
                 throw new Error('The component passed to AnimationFrameComponent does not implement onAnimationFrame');
             }
 
-            this.setState({
-                rafId: requestAnimationFrame(this.loop)
-            });
+            this.rafId = requestAnimationFrame(this.loop);
         }
 
         componentWillUnmount() {
