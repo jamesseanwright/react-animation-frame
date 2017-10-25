@@ -2,6 +2,11 @@
 
 const { jsdom } = require('jsdom');
 const createMockRaf = require('mock-raf');
+const enzyme = require('enzyme');
+const Adapter = require('enzyme-adapter-react-16');
+const adapter = new Adapter();
+
+enzyme.configure({ adapter });
 
 global.createDom = function createDom() {
     const mockRaf = createMockRaf();
