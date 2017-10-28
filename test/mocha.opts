@@ -1,2 +1,2 @@
-test/*Tests.transpiled.js
+test/*.jsx
 --require test/init

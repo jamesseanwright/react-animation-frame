@@ -1,5 +1,6 @@
 'use strict';
 
+require('babel-register');
 const { jsdom } = require('jsdom');
 const createMockRaf = require('mock-raf');
 const enzyme = require('enzyme');
