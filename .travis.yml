@@ -5,6 +5,7 @@ install: "npm i"
 script: "npm run test-with-coverage"
 
 deploy:
+  skip_cleanup: true
   provider: npm
   email: "james@jamesswright.co.uk"
   api_key:
